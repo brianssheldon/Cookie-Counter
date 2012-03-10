@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Cookie Sales</string>
+    <string name="app_name">Cookie Counter</string>
+    <string name="cookie_sales">Cookie Sales</string>
+    <string name="plus_sign">+</string>
+    <string name="_greaterthan"> ></string>
+    <string name="_arrows">>>></string>
+    <string name="cookies">Cookies for</string>
+    <string name="save">save</string>
+    <string name="exit">exit</string>
+    <string name="add_a_person">Add a Person</string>
+
+</resources>

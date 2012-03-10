@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.bubba.cookiecounter"
+    android:versionCode="2"
+    android:versionName="1.1" >
+
+    <uses-sdk android:minSdkVersion="2" android:targetSdkVersion="2"/>
+    
+	<supports-screens android:resizeable="true"
+                  android:smallScreens="true"
+                  android:normalScreens="true"
+                  android:largeScreens="true"
+                  android:anyDensity="true"/>
+
+    <application
+        android:icon="@drawable/cookiecountericon512"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".CookieCounterActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+ 		<activity android:name=".CookieUpdateActivity"></activity>
+ 		<activity android:name=".AddPersonActivity"></activity>
+    </application>
+
+</manifest>

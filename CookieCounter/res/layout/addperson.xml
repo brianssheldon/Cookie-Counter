@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addpersonll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/myshape">
+	    
+		<TextView
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+            android:layout_gravity="center"
+		    android:text="@string/add_a_person"
+		    android:textSize="20sp">
+		</TextView>
+	    
+		<EditText
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="5sp"
+		    android:layout_marginRight="5sp"
+		    android:id="@+id/addpersonedittext" 
+		    android:inputType="textPersonName">
+		</EditText>
+		
+	<RelativeLayout
+	    android:layout_width="100sp"
+	    android:layout_height="wrap_content"
+		android:layout_marginLeft="5sp">
+	    
+		<Button android:id="@+id/addpersonbutton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@+id/addpersonedittext"
+		    android:layout_alignParentLeft="true"
+		    android:text="@string/save"/>
+		
+		<Button android:id="@+id/cancelpersonbutton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_toRightOf="@+id/addpersonbutton"
+		    android:layout_alignParentRight="true"
+		    android:text="@string/exit"/>
+		
+	</RelativeLayout>
+</LinearLayout>
