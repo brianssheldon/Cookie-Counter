@@ -35,13 +35,13 @@ public class AddPersonActivity extends Activity
         		
         		CookiesSold gscs = new CookiesSold();
         		gscs.setName(tv.getText().toString());
+        		CookieDao cookieDao = new CookieDao();
+        		gscs.setCookiesSoldList(cookieDao.readFile(v.getContext()));
         		
         		list.add(gscs);
         		tv.setText("");
         		
         		CookieCounterActivity.saveGsFilex(v.getContext(), list);
-//                Toast.makeText(AddPersonActivity.this, v.getId() + " add it",
-//                    Toast.LENGTH_LONG).show();
             }
         });
 
@@ -51,9 +51,6 @@ public class AddPersonActivity extends Activity
             @Override
             public void onClick(View v)
             {
-//                Toast.makeText(AddPersonActivity.this, v.getId() + " cancel it",
-//                    Toast.LENGTH_LONG).show();
-
 		    	Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();

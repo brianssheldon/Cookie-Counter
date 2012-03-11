@@ -29,7 +29,7 @@ public class Cookie implements Serializable
 		int costLen = getCost().toString().length();
 		int quantityLen = ("" + getQuantity()).length();
 
-		BigDecimal saleTotal = getCost().multiply(new BigDecimal(getQuantity()+"")).setScale(2);
+		BigDecimal saleTotal = getTotal();
 		int saleTotalLen = saleTotal.toString().length();
 		
 		sb.append(

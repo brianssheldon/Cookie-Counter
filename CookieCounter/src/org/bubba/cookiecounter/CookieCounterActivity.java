@@ -14,9 +14,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -27,6 +29,7 @@ public class CookieCounterActivity extends Activity
 {
 	public static final String GS_SALES_FILE =  "cookiesalesfile";
 	ArrayList<CookiesSold> arrayList;// = new ArrayList<CookiesSold>();
+	CookieDao cookieDao = new CookieDao();
 	
     /** Called when the activity is first created. */
 	@Override
@@ -107,13 +110,6 @@ public class CookieCounterActivity extends Activity
         int i = -1;
         
         Object obj = mainLL.getChildAt(0);
-        
-//        if(obj != null && obj instanceof RelativeLayout)
-//        {
-//        	RelativeLayout rl = (RelativeLayout) obj;
-//        	Object oobbjj = rl.getChildAt(0);
-//        	oobbjj = rl.getChildAt(0);
-//        }
         
         while(mainLL.getChildCount() > 0)
 		{
@@ -262,5 +258,37 @@ public class CookieCounterActivity extends Activity
 		super.onActivityResult(requestCode, resultCode, data);
 
         populateScrollView((LinearLayout) findViewById(R.id.mylayout1));
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{	// only called once - creates the menu
+	    MenuInflater inflater = getMenuInflater();
+
+	    inflater.inflate(R.menu.mainmenu, menu);
+	    
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{	// called when they have selected a menu option
+
+	    int itemId = item.getItemId();
+	    
+		switch (itemId)
+	    {
+		    case R.id.exit:
+		    	this.finish(); // quit app. is this good or bad??
+		    	return true;
+		    	
+		    case R.id.editCookieList:	// go to screen to edit the list of cookies
+	            Intent myIntent = new Intent(this, EditListActivity.class);
+	            startActivityForResult(myIntent, 100);
+		    	return true;
+		    	
+		    default:
+		        return super.onOptionsItemSelected(item);
+	    }
 	}
 }

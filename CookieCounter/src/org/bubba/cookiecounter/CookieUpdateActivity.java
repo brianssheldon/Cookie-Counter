@@ -76,7 +76,7 @@ public class CookieUpdateActivity extends Activity
 			Cookie cookie = (Cookie) iterator.next();
 			LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    
-			RelativeLayout rl = (RelativeLayout) linflater.inflate(R.layout.cookieupdaterow, null);
+			RelativeLayout rl = (RelativeLayout) linflater.inflate(R.layout.cookielistupdaterow, null);
 			
 			TextView tvDesc = (TextView) rl.findViewById(R.id.cookierowdesc);
 			tvDesc.setText(cookie.getName());
@@ -172,8 +172,8 @@ public class CookieUpdateActivity extends Activity
     		tvTotalQuantity.setText("" + (Integer.parseInt(tvTotalQuantity.getText().toString()) + i));
     		
     		BigDecimal bd = new BigDecimal(tvTotalTotal.getText().toString());
-    		if(i == 1) bd = bd.add(new BigDecimal("3.50"));
-    		if(i == -1) bd = bd.subtract(new BigDecimal("3.50"));
+    		if(i == 1) bd = bd.add(row.getCost());
+    		if(i == -1) bd = bd.subtract(row.getCost());
     		tvTotalTotal.setText(bd.toString());
 		}
 	}

@@ -11,5 +11,8 @@
     <string name="save">save</string>
     <string name="exit">exit</string>
     <string name="add_a_person">Add a Person</string>
+    <string name="savecookielist">saveCookieList</string>
+    <string name="exitCookieList">exitCookeList</string>
+    <string name="update_cookie_list">Update Cookie List</string>
 
 </resources>
