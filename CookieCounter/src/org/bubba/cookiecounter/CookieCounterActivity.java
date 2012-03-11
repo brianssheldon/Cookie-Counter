@@ -256,7 +256,15 @@ public class CookieCounterActivity extends Activity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-
+		
+		if(requestCode == 123)
+		{	// back from EditListActivity
+			
+//			add/remove cookies from people
+			
+			
+		}
+		
         populateScrollView((LinearLayout) findViewById(R.id.mylayout1));
 	}
 
@@ -284,7 +292,7 @@ public class CookieCounterActivity extends Activity
 		    	
 		    case R.id.editCookieList:	// go to screen to edit the list of cookies
 	            Intent myIntent = new Intent(this, EditListActivity.class);
-	            startActivityForResult(myIntent, 100);
+	            startActivityForResult(myIntent, 123);
 		    	return true;
 		    	
 		    default:
