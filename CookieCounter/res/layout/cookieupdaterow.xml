@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/myshape"
+    android:id="@+id/rlupdatecookierow">
+
+    <EditText
+        android:id="@+id/cookieupdaterowdesc"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="5sp"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/cookieupdaterowprice"
+        android:layout_width="80sp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/cookieupdaterowdesc"
+        android:layout_centerVertical="true"
+        android:layout_margin="5sp"
+        android:inputType="numberDecimal"/>
+     
+</RelativeLayout>
