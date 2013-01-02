@@ -6,11 +6,14 @@ import java.util.Date;
 import java.util.Iterator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -24,13 +27,17 @@ public class CookieUpdateActivity extends Activity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		populateScreen();
+	}
+
+	private void populateScreen()
+	{
 		setContentView(R.layout.cookieupdate);
 
 		Intent sender = getIntent();
-//		String name = sender.getExtras().getString("name");
 		final int id = sender.getExtras().getInt("id");
 		
-		ArrayList<CookiesSold> list = CookieCounterActivity.readGsFilex(this);
+		final ArrayList<CookiesSold> list = CookieCounterActivity.readGsFilex(this);
 		
 		if(list == null || id < 0 || id > list.size())
 		{
@@ -40,7 +47,9 @@ public class CookieUpdateActivity extends Activity
 		CookiesSold gscs = list.get(id);
 		
 		TextView titleView = (TextView) findViewById(R.id.cookiesfortextview);
-		titleView.setText("Cookies for  " + gscs.getName());
+		String gsName = gscs.getName();
+		final String gsNameFinal = gsName;
+		titleView.setText("Cookies for  " + gsName);
 		
 		LinearLayout ll = (LinearLayout) findViewById(R.id.mylayoutxxyz);
 		if (ll == null)
@@ -51,7 +60,6 @@ public class CookieUpdateActivity extends Activity
 		Button emailButton = (Button) findViewById(R.id.cookieUpdateEmailButton);
         emailButton.setOnClickListener(new View.OnClickListener() 
         {
-            @Override
             public void onClick(View v)
             {
 		        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -64,22 +72,46 @@ public class CookieUpdateActivity extends Activity
 		        startActivity(emailIntent); 
             }
         });
-		// ----------------
-		
-//		getLineDivider(ll);
+
 		ArrayList<Cookie> gsList = gscs.getCookiesSoldList();
 		int i = 0;
 		int totalQuantity = 0;
+		BigDecimal totalCost = BigDecimal.ZERO;
 		
 		for (Iterator<Cookie> iterator = gsList.iterator(); iterator.hasNext();)
 		{
-			Cookie cookie = (Cookie) iterator.next();
+			final Cookie cookie = (Cookie) iterator.next();
 			LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    
 			RelativeLayout rl = (RelativeLayout) linflater.inflate(R.layout.cookielistupdaterow, null);
 			
 			TextView tvDesc = (TextView) rl.findViewById(R.id.cookierowdesc);
 			tvDesc.setText(cookie.getName());
+			
+	        tvDesc.setLongClickable(true);
+	        tvDesc.setOnLongClickListener(new OnLongClickListener()
+			{
+				public boolean onLongClick(View v)
+				{
+					final View vv = v;
+					
+			        new AlertDialog.Builder(v.getContext())
+			        .setIcon(android.R.drawable.ic_dialog_alert)
+			        .setTitle("Delete Item?")
+			        .setMessage("Do you want to delete\n\n" + cookie.getName() + "?")
+			        .setPositiveButton("Delete", new DialogInterface.OnClickListener() 
+			        {
+			            public void onClick(DialogInterface dialog, int which)
+			            {	// they have clicked on the description so remove this cookie
+			            	removeCookieFromGsList(list, gsNameFinal, cookie.getName(), vv.getContext());
+			            	populateScreen();
+			            }
+			        })
+			        .setNegativeButton("cancel", null)
+			        .show();
+					return true;
+				}
+			});
 
 			TextView tvPrice = (TextView) rl.findViewById(R.id.cookierowprice);
 			tvPrice.setText("" + cookie.getCost().setScale(2)); 
@@ -87,6 +119,8 @@ public class CookieUpdateActivity extends Activity
 			TextView tvQuantity = (TextView) rl.findViewById(R.id.cookierowquantity);
 			int quantity = cookie.getQuantity();
 			totalQuantity += quantity;
+			totalCost = totalCost.add(cookie.getTotal());
+			
 			tvQuantity.setText("" + quantity);
 			UpdateCookieLocator ucl = new UpdateCookieLocator(id, i, gsList);
 			tvQuantity.setTag(ucl);
@@ -96,21 +130,52 @@ public class CookieUpdateActivity extends Activity
 
 			Button plusSign = (Button) rl.findViewById(R.id.cookierowplus);
 			plusSign.setOnClickListener(new View.OnClickListener() 
-	        {@Override public void onClick(View v){(new UpdateCookieTotals()).updateRow(v, 1);}});
+	        {public void onClick(View v){(new UpdateCookieTotals()).updateRow(v, 1);}});
 			
 			Button plusMinus = (Button) rl.findViewById(R.id.cookierowminus);
 			plusMinus.setOnClickListener(new View.OnClickListener()
-			{@Override public void onClick(View v){(new UpdateCookieTotals()).updateRow(v, -1);}});
+			{public void onClick(View v){(new UpdateCookieTotals()).updateRow(v, -1);}});
 			
 			ll.addView(rl);
 //			getLineDivider(ll);
 			i += 1;
 		}
 		
-		writeTotalLine(id, ll, i, totalQuantity);
+		writeTotalLine(id, ll, i, totalQuantity, totalCost);
 	}
-
-	void writeTotalLine(int id, LinearLayout ll, int i, int totalQuantity)
+	
+	private void removeCookieFromGsList(
+			ArrayList<CookiesSold> list,
+			String gsNameFinal, String cookieName, Context context)
+	{
+		ArrayList<CookiesSold> newList = new ArrayList<CookiesSold>();
+		CookiesSold cookiesSold;
+		
+		for (Iterator iter = list.iterator(); iter.hasNext();)
+		{
+			cookiesSold = (CookiesSold) iter.next();
+			if(gsNameFinal.equals(cookiesSold.getName()))
+			{
+				ArrayList<Cookie> cookiesSoldList = cookiesSold.getCookiesSoldList();
+				ArrayList<Cookie> newCookiesSoldList = new ArrayList<Cookie>();
+				Cookie cookie;
+				
+				for (Iterator iter2 = cookiesSoldList.iterator(); iter2.hasNext();)
+				{
+					cookie = (Cookie) iter2.next();
+					if(!cookie.getName().equals(cookieName))
+					{
+						newCookiesSoldList.add(cookie);						
+					}
+				}
+				cookiesSold.setCookiesSoldList(newCookiesSoldList);
+			}
+			newList.add(cookiesSold);
+		}
+		CookieCounterActivity.saveGsFilex(context, newList);
+	}
+	
+	void writeTotalLine(int id, LinearLayout ll, int i, int totalQuantity, BigDecimal totalCost)
 	{
 		LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    
@@ -120,13 +185,13 @@ public class CookieUpdateActivity extends Activity
 		tvDesc.setText("Total");
 
 		TextView tvPrice = (TextView) rl.findViewById(R.id.cookierowprice);
-		tvPrice.setText("3.50"); 
+		tvPrice.setText("    ");//3.50"); 
 
 		TextView tvQuantity = (TextView) rl.findViewById(R.id.cookierowquantity);
 		tvQuantity.setText("" + totalQuantity);
 
 		TextView tvTotal = (TextView) rl.findViewById(R.id.cookierowtotalcost);
-		tvTotal.setText((new BigDecimal("3.50")).multiply(new BigDecimal(totalQuantity)).setScale(2).toString()); 
+		tvTotal.setText(totalCost.setScale(2).toString()); 
 		
 		ll.addView(rl);
 	}

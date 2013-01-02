@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class AddPersonActivity extends Activity
 {
-
-    /** Called when the activity is first created. */
 	@Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -22,7 +22,6 @@ public class AddPersonActivity extends Activity
         Button addPersonButton = (Button)findViewById(R.id.addpersonbutton);
         addPersonButton.setOnClickListener(new View.OnClickListener() 
         {
-            @Override
             public void onClick(View v)
             {
         		ArrayList<CookiesSold> list = CookieCounterActivity.readGsFilex(v.getContext());
@@ -36,7 +35,11 @@ public class AddPersonActivity extends Activity
         		CookiesSold gscs = new CookiesSold();
         		gscs.setName(tv.getText().toString());
         		CookieDao cookieDao = new CookieDao();
-        		gscs.setCookiesSoldList(cookieDao.readFile(v.getContext()));
+        		ArrayList<Cookie> listOfCookies = cookieDao.readFile(v.getContext());
+        		if(listOfCookies != null && listOfCookies.size() > 0)
+        		{
+        			gscs.setCookiesSoldList(listOfCookies);
+        		}
         		
         		list.add(gscs);
         		tv.setText("");
@@ -48,7 +51,6 @@ public class AddPersonActivity extends Activity
         Button cancelPersonButton = (Button)findViewById(R.id.cancelpersonbutton);
         cancelPersonButton.setOnClickListener(new View.OnClickListener() 
         {
-            @Override
             public void onClick(View v)
             {
 		    	Intent intent = new Intent();
@@ -56,6 +58,5 @@ public class AddPersonActivity extends Activity
                 finish();
             }
         });
-        
     }
 }

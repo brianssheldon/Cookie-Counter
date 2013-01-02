@@ -19,7 +19,7 @@
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="5sp"
 		    android:layout_marginRight="5sp"
-		    android:id="@+id/addpersonedittext" 
+		    android:id="@+id/addpersonedittext"
 		    android:inputType="textPersonName">
 		</EditText>
 		

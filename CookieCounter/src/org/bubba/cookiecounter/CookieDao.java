@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.content.Context;
 
@@ -36,7 +37,7 @@ public class CookieDao implements Serializable
 			try
 			{
 				list = new ArrayList<Cookie>();
-				list.add(new Cookie());
+				list.add(new Cookie("Long press to delete"));
 				
 				FileOutputStream fos = context.openFileOutput(LIST_OF_COOKIES, Context.MODE_PRIVATE);
 				ObjectOutputStream out = new ObjectOutputStream(fos);
@@ -77,5 +78,22 @@ public class CookieDao implements Serializable
 	public void setList(ArrayList<Cookie> list)
 	{
 		this.list = list;
+	}
+
+	public void remove(String nameFinal, Context context)
+	{
+		ArrayList<Cookie> cookieList = readFile(context);
+		ArrayList<Cookie> newCookieList = new ArrayList<Cookie>();
+		Cookie cookie;
+		
+		for (Iterator<Cookie> iter = cookieList.iterator(); iter.hasNext();)
+		{
+			cookie = iter.next();
+			if(!nameFinal.equals(cookie.getName()))
+			{
+				newCookieList.add(cookie);
+			}
+		}
+		writeFile(newCookieList, context);
 	}
 }

@@ -11,7 +11,7 @@
     	android:background="@drawable/myshape"
         android:orientation="horizontal">
     
-	    <Button android:id="@+id/savecontactlist"
+	    <Button android:id="@+id/savecookielist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -26,9 +26,9 @@
             android:layout_centerVertical="true"
 	        android:textSize="20sp"
 	        android:textColor="#00FF00"
-	        android:text="Contact List"/>
+	        android:text="@string/update_cookie_list"/>
 		
-		<Button android:id="@+id/exitContactList"
+		<Button android:id="@+id/exitCookieList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

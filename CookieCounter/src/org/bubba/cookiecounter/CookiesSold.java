@@ -11,8 +11,8 @@ public class CookiesSold implements Serializable
 	
 	public CookiesSold()
 	{
-		cookiesSoldList = CookieUtil.getCookieList();
-		name = "Jane Doe";
+		cookiesSoldList = new ArrayList<Cookie>();
+		name = "Long press to delete";
 	}
 
 	public CookiesSold(String name, ArrayList<Cookie> cookiesSoldList)

@@ -10,7 +10,19 @@ public class Cookie implements Serializable
 	private BigDecimal cost;
 	private int quantity;
 
-	public Cookie(){}
+	public Cookie()
+	{
+		this.name = "";
+		this.cost = new BigDecimal("0.00");
+		this.quantity = 0;
+	}
+	
+	public Cookie(String name)
+	{
+		this.name = name;
+		this.cost = new BigDecimal("0.00");
+		this.quantity = 0;
+	}
 	
 	public Cookie(String name, BigDecimal cost, int quantity)
 	{

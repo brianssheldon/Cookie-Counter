@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.Iterator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,10 +47,8 @@ public class CookieCounterActivity extends Activity
         Button addPersonButton = (Button)findViewById(R.id.addPersonButton);
         addPersonButton.setOnClickListener(new View.OnClickListener() 
         {
-            @Override
             public void onClick(View v)
             {
-        
 		        Intent myIntentx = new Intent(v.getContext(), AddPersonActivity.class);
 		        startActivityForResult(myIntentx, 100);
             }
@@ -57,7 +57,6 @@ public class CookieCounterActivity extends Activity
         Button sendEmailButton = (Button)findViewById(R.id.emailButton);
         sendEmailButton.setOnClickListener(new View.OnClickListener() 
         {
-            @Override
             public void onClick(View v)
             {
 		        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -109,8 +108,6 @@ public class CookieCounterActivity extends Activity
 		LayoutInflater linflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         int i = -1;
         
-        Object obj = mainLL.getChildAt(0);
-        
         while(mainLL.getChildCount() > 0)
 		{
 			mainLL.removeViewAt(0);
@@ -122,6 +119,7 @@ public class CookieCounterActivity extends Activity
 		{
             i = i + 1;
         	CookiesSold gscs = (CookiesSold) iter.next();
+			final CookiesSold gscsFinal = gscs;
 			
             View customView = linflater.inflate(R.layout.person, null);
             
@@ -131,12 +129,26 @@ public class CookieCounterActivity extends Activity
             tv.setLongClickable(true);
             tv.setOnLongClickListener(new OnLongClickListener()
 			{
-				@Override
 				public boolean onLongClick(View v)
 				{
-					arrayList.remove(v.getId());
-					saveGsFilex();
-					populateScrollView((LinearLayout) findViewById(R.id.mylayout1));
+					final View vv = v;
+					String name = gscsFinal.getName();
+					
+			        new AlertDialog.Builder(v.getContext())
+			        .setIcon(android.R.drawable.ic_dialog_alert)
+			        .setTitle("Delete Item?")
+			        .setMessage("Do you want to delete\n\n" + name + "?")
+			        .setPositiveButton("Delete", new DialogInterface.OnClickListener() 
+			        {
+			            public void onClick(DialogInterface dialog, int which)
+			            {	// they have clicked on the checkbox so remove this person
+			            	arrayList.remove(vv.getId());
+							saveGsFilex();
+							populateScrollView((LinearLayout) findViewById(R.id.mylayout1));
+			            }
+			        })
+			        .setNegativeButton("cancel", null)
+			        .show();
 					return true;
 				}
 			});
@@ -145,7 +157,6 @@ public class CookieCounterActivity extends Activity
             cb.setId(i);
             cb.setOnClickListener(new View.OnClickListener() 
             {
-	            @Override
 	            public void onClick(View v)
 	            {
 	            	RelativeLayout rl = (RelativeLayout)v.getParent();
@@ -153,9 +164,6 @@ public class CookieCounterActivity extends Activity
 	            	if(rl.getChildCount() < 1 || !(rl.getChildAt(0) instanceof TextView )) {return;}
 
 	            	TextView tv = (TextView)rl.getChildAt(0);
-	            	
-//	                Toast.makeText(CookieCounterActivity.this, v.getId() + " " + tv.getText(),
-//	                    Toast.LENGTH_LONG).show();
 	                
 	                Intent myIntent = new Intent(v.getContext(), CookieUpdateActivity.class);
 	                myIntent.putExtra("name", tv.getText());

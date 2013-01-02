@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/cookierowprice"
         android:layout_centerVertical="true"
-        android:text="*"/>
+        android:text=" "/>
     
     <TextView
         android:id="@+id/cookierowquantity"
