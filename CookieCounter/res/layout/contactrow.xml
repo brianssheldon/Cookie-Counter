@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/myshape"
+    android:id="@+id/rlcontactrow">
+
+    <EditText
+        android:id="@+id/contactRowName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2sp"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:inputType="textPersonName"/>
+    
+    <EditText
+        android:id="@+id/contactRowAddress1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:inputType="textPostalAddress"
+        android:layout_below="@+id/contactRowName"/>
+    
+    <EditText
+        android:id="@+id/contactRowAddress2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:inputType="textPostalAddress"
+        android:layout_below="@+id/contactRowAddress1"/>
+
+    <EditText
+        android:id="@+id/contactRowPhoneNumber"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:inputType="phone"
+        android:autoLink="phone"
+        android:layout_below="@+id/contactRowAddress2"/>
+     
+</RelativeLayout>

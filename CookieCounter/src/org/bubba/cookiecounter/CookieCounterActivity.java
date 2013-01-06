@@ -99,6 +99,8 @@ public class CookieCounterActivity extends Activity
 		}
 
     	sb.append("grand total = " + grandTotal.toString());
+    	
+    	sb.append(CookieUtil.getCookieTotalsForEmail(arrayList));
 		
 		return sb.toString();
 	}
@@ -269,10 +271,11 @@ public class CookieCounterActivity extends Activity
 		{	// back from EditListActivity
 			
 //			add/remove cookies from people
-			
-			
 		}
-		
+		else if(requestCode == 144)
+		{
+			// back from ContactList
+		}
         populateScrollView((LinearLayout) findViewById(R.id.mylayout1));
 	}
 
@@ -297,10 +300,15 @@ public class CookieCounterActivity extends Activity
 		    case R.id.exit:
 		    	this.finish(); // quit app. is this good or bad??
 		    	return true;
-		    	
+
 		    case R.id.editCookieList:	// go to screen to edit the list of cookies
 	            Intent myIntent = new Intent(this, EditListActivity.class);
 	            startActivityForResult(myIntent, 123);
+		    	return true;
+		    	
+		    case R.id.editContactList:	// go to screen to edit the list of cookies
+	            Intent contactIntent = new Intent(this, ContactActivity.class);
+	            startActivityForResult(contactIntent, 144);
 		    	return true;
 		    	
 		    default:

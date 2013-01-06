@@ -14,5 +14,6 @@
     <string name="savecookielist">saveCookieList</string>
     <string name="exitCookieList">exitCookeList</string>
     <string name="update_cookie_list">Update Cookie List</string>
+    <string name="contact_list">Contact List</string>
 
 </resources>

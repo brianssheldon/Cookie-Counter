@@ -11,7 +11,7 @@
     	android:background="@drawable/myshape"
         android:orientation="horizontal">
     
-	    <Button android:id="@+id/savecookielist"
+	    <Button android:id="@+id/savecontactlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -26,24 +26,25 @@
             android:layout_centerVertical="true"
 	        android:textSize="20sp"
 	        android:textColor="#00FF00"
-	        android:text="@string/update_cookie_list"/>
+	        android:text="@string/contact_list"/>
 		
-		<Button android:id="@+id/exitCookieList"
+		<Button android:id="@+id/emailcontactlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="4sp"
             android:layout_marginTop="4sp"
-		    android:text="@string/exit"/>
+        	android:background="@drawable/emailicon50x58"/>
 		
 	</RelativeLayout>
 
 	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:id="@+id/updateCookieListScrollView"
+	    android:id="@+id/updateContactListScrollView"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent">
 	
 	        <LinearLayout
-	            android:id="@+id/updateCookieListList"
+	            android:id="@+id/updateContactListList"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:orientation="vertical"/>
