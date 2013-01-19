@@ -293,11 +293,25 @@ public class CookieUpdateActivity extends Activity
     	
     	BigDecimal personTotal = new BigDecimal("0.00").setScale(2);
     	sb.append(gscs.getName() + "\n");
+
+    	int namelen = 20;
+    	int quantitylen = 5;
+    	int costlen = 8; 
+    	int saletotallen = 8;
     	
     	for (Iterator<Cookie> iter2 = gscs.getCookiesSoldList().iterator(); iter2.hasNext();)
 		{
 			Cookie gsc = iter2.next();
-			sb.append(gsc.toStringBuffer());
+			namelen = CookieUtil.whichIsLarger(gsc.getName().length(), namelen);
+			quantitylen = CookieUtil.whichIsLarger(gsc.getQuantity(), quantitylen);
+			costlen = CookieUtil.whichIsLarger(("" + gsc.getCost()).toString().length(), costlen);
+			saletotallen = CookieUtil.whichIsLarger(gsc.getTotal().toString().length(), namelen);
+		}
+    	
+    	for (Iterator<Cookie> iter2 = gscs.getCookiesSoldList().iterator(); iter2.hasNext();)
+		{
+			Cookie gsc = iter2.next();
+			sb.append(gsc.toStringBuffer(namelen, quantitylen, costlen, saletotallen));
 			BigDecimal saleTotal = gsc.getTotal();
 			personTotal = personTotal.add(saleTotal);
 		}

@@ -27,7 +27,11 @@ public class CookieUtil
 		BigDecimal grandTotal = new BigDecimal("0.00").setScale(2);
 		int grandTotalQuantity = 0;
 		ArrayList<Cookie> gtList = new ArrayList<Cookie>();
-		
+
+    	int namelen = 20;
+    	int quantitylen = 5;
+    	int saletotallen = 8;
+    	
 		for (Iterator<CookiesSold> iter = arrayList.iterator(); iter.hasNext();)
 		{
         	CookiesSold gscs = (CookiesSold) iter.next();
@@ -59,13 +63,21 @@ public class CookieUtil
 			}
 		}
 		
-		
+
 		for(Iterator<Cookie> iter3 = gtList.iterator(); iter3.hasNext();)
 		{
 			Cookie gtCookie = iter3.next();
-			sb.append(padWithSpaces(gtCookie.getName(), 15) + " ");
-			sb.append(padWithSpaces("" + gtCookie.getQuantity(), 3) + " ");
-			sb.append(padWithSpaces("" + gtCookie.getTotal(), 6) + " ");
+
+	    	namelen = whichIsLarger(gtCookie.getName().length(), namelen);
+	    	quantitylen = whichIsLarger(("" + gtCookie.getQuantity()).length(), quantitylen);
+	    	saletotallen = whichIsLarger(gtCookie.getTotal().toString().length(), saletotallen);
+		}
+		for(Iterator<Cookie> iter3 = gtList.iterator(); iter3.hasNext();)
+		{
+			Cookie gtCookie = iter3.next();
+			sb.append(padWithSpaces(gtCookie.getName(), namelen) + " ");
+			sb.append(padWithSpaces("" + gtCookie.getQuantity(), quantitylen) + " ");
+			sb.append(padWithSpaces("" + gtCookie.getTotal(), saletotallen) + " ");
 			sb.append("\n");
 			
 			grandTotal = grandTotal.add(gtCookie.getTotal());
@@ -81,8 +93,14 @@ public class CookieUtil
 		return sb.toString();
 	}
 
+	public static int whichIsLarger(int length, int namelen)
+	{
+		if(length > namelen) return length;
+		return namelen;
+	}
+
 	private static String padWithSpaces(String name, int i)
 	{
-		return (name + "               ").substring(0, i);
+		return (name + "                                         ").substring(0, i);
 	}
 }
